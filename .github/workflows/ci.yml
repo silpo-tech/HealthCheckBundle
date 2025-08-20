@@ -20,6 +20,34 @@ jobs:
       contents: read
       id-token: write
 
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      mongodb:
+        image: mongo:7.0
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
+        options: >-
+          --health-cmd "mongosh --eval 'db.runCommand({ping: 1})'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 27017:27017
+
     steps:
     - uses: actions/checkout@v4
       with:
@@ -29,7 +57,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-version }}
-        extensions: json, mbstring, xml, pcov
+        extensions: json, mbstring, xml, pcov, mongodb, pdo_pgsql
         coverage: pcov
 
     - name: Cache Composer packages
@@ -45,10 +73,30 @@ jobs:
       run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction
 
     - name: Run test suite
+      env:
+        POSTGRES_HOST: localhost
+        POSTGRES_PORT: 5432
+        POSTGRES_USER: user
+        POSTGRES_PASSWORD: password
+        POSTGRES_DB: test
+        MONGODB_URL: mongodb://root:example@localhost:27017
+        MONGODB_DB: test
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: example
       run: composer test:run
 
     - name: Run tests with coverage
       if: matrix.php-version == '8.3' && matrix.dependency-version == 'prefer-stable'
+      env:
+        POSTGRES_HOST: localhost
+        POSTGRES_PORT: 5432
+        POSTGRES_USER: user
+        POSTGRES_PASSWORD: password
+        POSTGRES_DB: test
+        MONGODB_URL: mongodb://root:example@localhost:27017
+        MONGODB_DB: test
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: example
       run: composer test:coverage
 
     - name: Upload coverage reports to Codecov
