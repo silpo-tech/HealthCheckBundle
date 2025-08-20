@@ -1,4 +1,9 @@
-# Health Check Bundle #
+# Health Check Bundle for Symfony Framework #
+
+[![CI](https://github.com/silpo-tech/HealthCheckBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/silpo-tech/HealthCheckBundle/actions)
+[![codecov](https://codecov.io/gh/silpo-tech/HealthCheckBundle/graph/badge.svg)](https://codecov.io/gh/silpo-tech/HealthCheckBundle)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 
 ## About ##
 
