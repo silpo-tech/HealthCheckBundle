@@ -44,14 +44,38 @@ health_check:
           - doctrine_mongodb
 ```
 
-Run unit tests:
+## Testing ##
+
+### Run Unit and Integration Tests ###
 
 ```shell
-docker run -it -v "$(pwd)":/project -e BASE_PATH="/project" -e DIR_SRC="/project/src/" fozzyua/docker-php-base-image:v1.0.7-php8.3.1 sh -c "APP_ENV=test composer install --working-dir=/project -o --no-interaction --ignore-platform-reqs && php /project/vendor/bin/phpunit --testsuite unit -c /project/phpunit.xml"
+composer test:run
 ```
 
-Run integration tests:
+### Run Full Test Suite (including Application Tests) ###
+
+For application tests that require database services, you can use Docker Compose:
 
 ```shell
-docker run -it -v "$(pwd)":/project -e BASE_PATH="/project" -e DIR_SRC="/project/src/" fozzyua/docker-php-base-image:v1.0.7-php8.3.1 sh -c "APP_ENV=test composer install --working-dir=/project -o --no-interaction --ignore-platform-reqs && php /project/vendor/bin/phpunit --testsuite integration -c /project/phpunit.xml"
+# Start database services
+docker-compose -f docker-compose.test.yml up -d
+
+# Run all tests including application tests
+composer test:run
+
+# Stop database services
+docker-compose -f docker-compose.test.yml down
+```
+
+### Run Specific Test Suites ###
+
+```shell
+# Unit tests only (no external dependencies)
+php bin/phpunit --testsuite unit
+
+# Integration tests only
+php bin/phpunit --testsuite integration
+
+# Application tests only (requires database services)
+php bin/phpunit --testsuite application
 ```

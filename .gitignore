@@ -7,3 +7,4 @@ bin
 reports
 .php-cs-fixer.cache
 var
+.env.test.local
