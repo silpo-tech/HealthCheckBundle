@@ -1,0 +1,51 @@
+{
+  "name": "silpo-tech/health-check-bundle",
+  "type": "symfony-bundle",
+  "description": "Health check bundle",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=8.3",
+    "symfony/config": "6.0|^7.0",
+    "symfony/dependency-injection": "6.0|^7.0",
+    "symfony/routing": "6.0|^7.0",
+    "symfony/doctrine-bridge": "6.0 || ^7.0",
+    "symfony/framework-bundle": "6.0 || ^7.0",
+    "symfony/yaml": "6.0 || ^7.0"
+  },
+  "config": {
+    "bin-dir": "bin",
+    "symfony/runtime": true
+  },
+  "autoload": {
+    "psr-4": {
+      "HealthCheck\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "HealthCheck\\Tests\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "symfony/http-kernel": "6.0|^7.0",
+    "symfony/dotenv": "6.0|^7.0",
+    "phpunit/phpunit": "^11.5",
+    "doctrine/dbal": "3.9.3",
+    "doctrine/mongodb-odm-bundle": "^5.0",
+    "doctrine/doctrine-bundle": "^2.12",
+    "symfony/process": "6.0|^7.0",
+    "symfony/browser-kit": "6.0|^7.0",
+    "symfony/filesystem": "6.0 || ^7.0",
+    "silpo-tech/lib-test-utilities": "^1.0"
+  },
+  "scripts": {
+    "test:coverage": {
+      "command": "APP_ENV=test php -d extension=pcov.so -d pcov.enabled=1 bin/phpunit --colors=never --coverage-clover reports/coverage/clover.xml --log-junit reports/junit.xml"
+    },
+    "test:run": [
+      "APP_ENV=test php bin/phpunit --color=always"
+    ]
+  }
+}

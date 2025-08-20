@@ -1,0 +1,15 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  HealthCheck\Checker\DoctrineDbalChecker: ~
+
+  HealthCheck\Checker\DoctrineMongoDBChecker: ~
+
+  HealthCheck\Controller\HealthController:
+    arguments: [!tagged_iterator health_check.checker, '%web.checkers%']
+
+  HealthCheck\Command\HealthCommand:
+    arguments: [!tagged_iterator health_check.checker, '%command.checkers%']

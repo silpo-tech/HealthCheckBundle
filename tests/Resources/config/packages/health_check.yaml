@@ -1,0 +1,10 @@
+health_check:
+  apps:
+    web:
+      checkers:
+        - doctrine_dbal
+        - doctrine_mongodb
+    command:
+      checkers:
+        - doctrine_dbal
+        - doctrine_mongodb

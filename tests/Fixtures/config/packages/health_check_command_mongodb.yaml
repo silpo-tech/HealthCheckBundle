@@ -1,0 +1,5 @@
+health_check:
+  apps:
+    command:
+      checkers:
+        - doctrine_mongodb

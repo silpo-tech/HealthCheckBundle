@@ -1,0 +1,12 @@
+doctrine:
+  dbal:
+    default_connection: default
+    connections:
+      default:
+        server_version: '11.6'
+        dbname:   '%env(POSTGRES_DB)%'
+        host:     '%env(POSTGRES_HOST)%'
+        port:     '%env(POSTGRES_PORT)%'
+        user:     '%env(POSTGRES_USER)%'
+        password: '%env(POSTGRES_PASSWORD)%'
+        driver:   pdo_pgsql
