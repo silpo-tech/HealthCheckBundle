@@ -45,9 +45,9 @@ class HealthControllerTest extends WebTestCase
         $kernel->addTestBundle(DoctrineBundle::class);
         $kernel->addTestBundle(DoctrineMongoDBBundle::class);
 
-        $kernel->addTestConfig(__DIR__ . '/../../../Resources/config/packages/health_check.yaml');
-        $kernel->addTestConfig(__DIR__ . '/../../../Resources/config/packages/doctrine.yaml');
-        $kernel->addTestConfig(__DIR__ . '/../../../Resources/config/packages/doctrine_mongodb.yaml');
+        $kernel->addTestConfig(__DIR__.'/../../../Resources/config/packages/health_check.yaml');
+        $kernel->addTestConfig(__DIR__.'/../../../Resources/config/packages/doctrine.yaml');
+        $kernel->addTestConfig(__DIR__.'/../../../Resources/config/packages/doctrine_mongodb.yaml');
 
         $kernel->handleOptions($options);
 

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace HealthCheck\Tests\TestCase\Unit\Command;
 
-use SilpoTech\Lib\TestUtilities\TestCase\Traits\UtilityTrait;
 use HealthCheck\Checker\CheckerInterface;
 use HealthCheck\Checker\DoctrineDbalChecker;
 use HealthCheck\Checker\DoctrineMongoDBChecker;
 use HealthCheck\Command\HealthCommand;
 use HealthCheck\Tests\Traits\MockTrait;
 use PHPUnit\Framework\TestCase;
+use SilpoTech\Lib\TestUtilities\TestCase\Traits\UtilityTrait;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class HealthCommandTest extends TestCase
@@ -36,13 +36,13 @@ class HealthCommandTest extends TestCase
             'checkerServices' => function (): array {
                 return [
                     new DoctrineDbalChecker(self::$_this->createHealthyDbalRegistry(), self::$_this->createLogger()),
-                    new DoctrineMongoDBChecker(self::$_this->createHealthyMongodbRegistry(), self::$_this->createLogger())
+                    new DoctrineMongoDBChecker(self::$_this->createHealthyMongodbRegistry(), self::$_this->createLogger()),
                 ];
             },
             'expected' => [
                 'statusCode' => 0,
-                'displayMessage' => "doctrine_dbal: ok\ndoctrine_mongodb: ok\n"
-            ]
+                'displayMessage' => "doctrine_dbal: ok\ndoctrine_mongodb: ok\n",
+            ],
         ];
 
         yield 'failed with mongodb' => [
@@ -53,13 +53,13 @@ class HealthCommandTest extends TestCase
                     new DoctrineMongoDBChecker(
                         self::$_this->createUnhealthyMongodbRegistry(),
                         self::$_this->createLogger('error', '[health-check] doctrine_mongodb failed, reason MongoDB connection failed')
-                    )
+                    ),
                 ];
             },
             'expected' => [
                 'statusCode' => 1,
-                'displayMessage' => "doctrine_dbal: ok\ndoctrine_mongodb: ko\n"
-            ]
+                'displayMessage' => "doctrine_dbal: ok\ndoctrine_mongodb: ko\n",
+            ],
         ];
 
         yield 'with checkers not in checker services' => [
@@ -70,13 +70,13 @@ class HealthCommandTest extends TestCase
                 $checkerMock->method('getName')->willReturn('other_checker');
 
                 return [
-                    $checkerMock
+                    $checkerMock,
                 ];
             },
             'expected' => [
                 'statusCode' => 0,
-                'displayMessage' => ''
-            ]
+                'displayMessage' => '',
+            ],
         ];
     }
 }

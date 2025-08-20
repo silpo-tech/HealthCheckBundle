@@ -11,7 +11,6 @@ use HealthCheck\Checker\DoctrineDbalChecker;
 use HealthCheck\Checker\DoctrineMongoDBChecker;
 use HealthCheck\HealthCheckBundle;
 use HealthCheck\Tests\Stub\Kernel;
-use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\Container;
@@ -64,8 +63,8 @@ class KernelTest extends KernelTestCase
     {
         yield 'dbal command' => [
             'configs' => [
-                __DIR__ . '/../../Fixtures/config/packages/health_check_command_dbal.yaml',
-                __DIR__ . '/../../Resources/config/packages/doctrine.yaml',
+                __DIR__.'/../../Fixtures/config/packages/health_check_command_dbal.yaml',
+                __DIR__.'/../../Resources/config/packages/doctrine.yaml',
             ],
             'dependencies' => [DoctrineBundle::class],
             'expected' => [
@@ -79,8 +78,8 @@ class KernelTest extends KernelTestCase
 
         yield 'mongodb command' => [
             'configs' => [
-                __DIR__ . '/../../Fixtures/config/packages/health_check_command_mongodb.yaml',
-                __DIR__ . '/../../Resources/config/packages/doctrine_mongodb.yaml',
+                __DIR__.'/../../Fixtures/config/packages/health_check_command_mongodb.yaml',
+                __DIR__.'/../../Resources/config/packages/doctrine_mongodb.yaml',
             ],
             'dependencies' => [DoctrineMongoDBBundle::class],
             'expected' => [
@@ -94,9 +93,9 @@ class KernelTest extends KernelTestCase
 
         yield 'mongodb + dbal command' => [
             'configs' => [
-                __DIR__ . '/../../Fixtures/config/packages/health_check_command.yaml',
-                __DIR__ . '/../../Resources/config/packages/doctrine_mongodb.yaml',
-                __DIR__ . '/../../Resources/config/packages/doctrine.yaml',
+                __DIR__.'/../../Fixtures/config/packages/health_check_command.yaml',
+                __DIR__.'/../../Resources/config/packages/doctrine_mongodb.yaml',
+                __DIR__.'/../../Resources/config/packages/doctrine.yaml',
             ],
             'dependencies' => [DoctrineBundle::class, DoctrineMongoDBBundle::class],
             'expected' => [
@@ -135,18 +134,18 @@ class KernelTest extends KernelTestCase
     {
         yield 'doctrine extension not found' => [
             'configs' => [
-                __DIR__ . '/../../Fixtures/config/packages/health_check_command_dbal.yaml',
+                __DIR__.'/../../Fixtures/config/packages/health_check_command_dbal.yaml',
             ],
             'dependencies' => [],
-            'expected' => ['exception' => new LogicException("Doctrine DBAL health checker can't be enabled, 'doctrine' service was not found")],
+            'expected' => ['exception' => new \LogicException("Doctrine DBAL health checker can't be enabled, 'doctrine' service was not found")],
         ];
 
         yield 'doctrine_mongodb extension not found' => [
             'configs' => [
-                __DIR__ . '/../../Fixtures/config/packages/health_check_command_mongodb.yaml',
+                __DIR__.'/../../Fixtures/config/packages/health_check_command_mongodb.yaml',
             ],
             'dependencies' => [],
-            'expected' => ['exception' => new LogicException("Doctrine MongoDB health checker can't be enabled, 'doctrine_mongodb' service was not found")],
+            'expected' => ['exception' => new \LogicException("Doctrine MongoDB health checker can't be enabled, 'doctrine_mongodb' service was not found")],
         ];
     }
 }

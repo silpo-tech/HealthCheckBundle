@@ -23,9 +23,7 @@ class DoctrineDbalCheckerPass implements CompilerPassInterface
         }
 
         if (!$container->hasDefinition('doctrine')) {
-            throw new \LogicException(
-                "Doctrine DBAL health checker can't be enabled, 'doctrine' service was not found",
-            );
+            throw new \LogicException("Doctrine DBAL health checker can't be enabled, 'doctrine' service was not found");
         }
 
         $definition = $container->getDefinition(DoctrineDbalChecker::class);

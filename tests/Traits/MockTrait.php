@@ -9,13 +9,11 @@ use Doctrine\DBAL\Driver;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use MongoDB\Client;
 use Psr\Log\LoggerInterface;
-use RuntimeException;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
-use ArrayIterator;
 
 trait MockTrait
 {
-    private function createLogger(string|null $method = null, string|null $expectedMessage = null): LoggerInterface
+    private function createLogger(?string $method = null, ?string $expectedMessage = null): LoggerInterface
     {
         $loggerMock = $this->createMock(LoggerInterface::class);
 
@@ -35,7 +33,7 @@ trait MockTrait
         return $loggerMock;
     }
 
-    private function createHealthyDbalRegistry(string|null $version = null): ManagerRegistry
+    private function createHealthyDbalRegistry(?string $version = null): ManagerRegistry
     {
         $platformMock = $this->createMock(AbstractPlatform::class);
         $platformMock->method('getDummySelectSQL')->willReturn('SELECT 1');
@@ -83,7 +81,7 @@ trait MockTrait
         ;
         $connectionMock->expects($this->once())
             ->method('fetchOne')
-            ->willThrowException(new RuntimeException('Test DB connection failed'))
+            ->willThrowException(new \RuntimeException('Test DB connection failed'))
         ;
 
         $registryMock = $this->createMock(ManagerRegistry::class);
@@ -101,7 +99,7 @@ trait MockTrait
         $connectionMock
             ->expects($this->once())
             ->method('listDatabases')
-            ->willThrowException(new RuntimeException('MongoDB connection failed'))
+            ->willThrowException(new \RuntimeException('MongoDB connection failed'))
         ;
 
         $registryMock = $this->createMock(ManagerRegistry::class);
@@ -119,7 +117,7 @@ trait MockTrait
         $connectionMock
             ->expects($this->once())
             ->method('listDatabases')
-            ->willReturn(new ArrayIterator())
+            ->willReturn(new \ArrayIterator())
         ;
 
         $registryMock = $this->createMock(ManagerRegistry::class);

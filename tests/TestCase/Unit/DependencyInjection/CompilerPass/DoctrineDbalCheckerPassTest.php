@@ -57,7 +57,7 @@ class DoctrineDbalCheckerPassTest extends TestCase
 
         $definition = $this->container->getDefinition(DoctrineDbalChecker::class);
 
-        $this->assertEquals('doctrine', (string)$definition->getArgument(0));
+        $this->assertEquals('doctrine', (string) $definition->getArgument(0));
 
         $this->assertTrue($definition->hasTag('health_check.checker'));
     }

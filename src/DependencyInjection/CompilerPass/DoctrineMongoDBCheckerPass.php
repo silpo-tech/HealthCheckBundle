@@ -23,9 +23,7 @@ class DoctrineMongoDBCheckerPass implements CompilerPassInterface
         }
 
         if (!$container->hasDefinition('doctrine_mongodb')) {
-            throw new \LogicException(
-                "Doctrine MongoDB health checker can't be enabled, 'doctrine_mongodb' service was not found",
-            );
+            throw new \LogicException("Doctrine MongoDB health checker can't be enabled, 'doctrine_mongodb' service was not found");
         }
 
         $definition = $container->getDefinition(DoctrineMongoDBChecker::class);
