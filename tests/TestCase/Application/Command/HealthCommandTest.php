@@ -54,7 +54,7 @@ class HealthCommandTest extends KernelTestCase
     {
         // Skip test if database services are not available (e.g., in local development)
         $postgresHost = $_ENV['POSTGRES_HOST'] ?? 'postgres';
-        if (!$this->isDatabaseServiceAvailable($postgresHost, (int)($_ENV['POSTGRES_PORT'] ?? 5432))) {
+        if (!$this->isDatabaseServiceAvailable($postgresHost, (int) ($_ENV['POSTGRES_PORT'] ?? 5432))) {
             $this->markTestSkipped('PostgreSQL service is not available. This test requires database services to be running.');
         }
 
@@ -85,8 +85,10 @@ class HealthCommandTest extends KernelTestCase
         $connection = @fsockopen($host, $port, $errno, $errstr, 1);
         if ($connection) {
             fclose($connection);
+
             return true;
         }
+
         return false;
     }
 }
